@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Navigation_View</string>
+    <string name="home">Home</string>
+    <string name="categories">Categories</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string-array name="women">
+        <item>Item1</item>
+        <item>Item2</item>
+        <item>Item3</item>
+    </string-array>
+
+    <string-array name="men">
+        <item>T-shirt</item>
+        <item>Kurta</item>
+        <item>Pant</item>
+    </string-array>
+</resources>
