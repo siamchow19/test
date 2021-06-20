@@ -2,12 +2,12 @@ package com.example.navigation_view;
 
 public class FeaturedHelperClass {
     int image;
-    String name,price;
+    String name;
 
-    public FeaturedHelperClass(int image, String name, String price) {
+    public FeaturedHelperClass(int image, String name) {
         this.image = image;
         this.name = name;
-        this.price = price;
+
     }
 
     public int getImage() {
@@ -26,11 +26,5 @@ public class FeaturedHelperClass {
         this.name = name;
     }
 
-    public String getPrice() {
-        return price;
-    }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
 }

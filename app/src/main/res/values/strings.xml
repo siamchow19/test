@@ -9,14 +9,71 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string-array name="women">
-        <item>Item1</item>
-        <item>Item2</item>
-        <item>Item3</item>
+        <item>Shalwar Kameez</item>
+        <item>Kurta</item>
+        <item>T-shirt</item>
+        <item>Saree</item>
     </string-array>
 
     <string-array name="men">
         <item>T-shirt</item>
-        <item>Kurta</item>
+        <item>Punjabi</item>
         <item>Pant</item>
+    </string-array>
+
+    <string-array name="kid">
+        <item>T-shirt</item>
+        <item>Frock</item>
+        <item>Pant</item>
+    </string-array>
+
+    <string-array name="kids_fashion">
+        <item>0-6 month</item>
+        <item>1 yr</item>
+        <item>2 yr</item>
+        <item>3 yr</item>
+        <item>4 yr</item>
+        <item>5 yr</item>
+    </string-array>
+
+    <string-array name="T_shirt">
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+        <item>XXL</item>
+    </string-array>
+
+    <string-array name="Shirt_punjabi">
+        <item>34</item>
+        <item>36</item>
+        <item>38</item>
+        <item>40</item>
+        <item>42</item>
+        <item>44</item>
+    </string-array>
+
+    <string-array name="WomenFashion">
+        <item>32</item>
+        <item>34</item>
+        <item>36</item>
+        <item>38</item>
+        <item>40</item>
+        <item>42</item>
+        <item>44</item>
+    </string-array>
+
+    <string-array name="Saree">
+        <item>6 yard</item>
+    </string-array>
+
+    <string-array name="Men_pant">
+        <item>28</item>
+        <item>30</item>
+        <item>32</item>
+        <item>34</item>
+        <item>36</item>
+        <item>38</item>
+        <item>40</item>
     </string-array>
 </resources>

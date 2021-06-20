@@ -1,5 +1,6 @@
 package com.example.navigation_view;
 
+import android.content.Context;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +16,20 @@ import java.util.ArrayList;
 public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.FeaturedViewHolder> {
 
     ArrayList<FeaturedHelperClass> featuredList;
+    OnNoteListener monNoteListener;
+    Context context;
 
-    public FeaturedAdapter(ArrayList<FeaturedHelperClass> featuredList) {
+    public FeaturedAdapter(ArrayList<FeaturedHelperClass> featuredList, Context context,OnNoteListener monNoteListener) {
         this.featuredList = featuredList;
+        this.context = context;
+        this.monNoteListener = monNoteListener;
     }
 
     @NonNull
     @Override
     public FeaturedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card,parent,false);
-        FeaturedViewHolder featuredViewHolder = new FeaturedViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false);
+        FeaturedViewHolder featuredViewHolder = new FeaturedViewHolder(view, monNoteListener);
         return featuredViewHolder;
     }
 
@@ -33,8 +38,8 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
         FeaturedHelperClass featuredHelperClass = featuredList.get(position);
 
         holder.image.setImageResource(featuredHelperClass.getImage());
-        holder.product_name.setText(featuredHelperClass.getName());
-        holder.price.setText(featuredHelperClass.getPrice());
+        holder.productSubCategory.setText(featuredHelperClass.getName());
+
     }
 
     @Override
@@ -43,18 +48,28 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
     }
 
 
-    public static class FeaturedViewHolder extends RecyclerView.ViewHolder{
+    public static class FeaturedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView image;
-        TextView product_name, price;
+        TextView productSubCategory;
+        OnNoteListener onNoteListener;
 
-        public FeaturedViewHolder(@NonNull View itemView) {
+        public FeaturedViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
 
             image = itemView.findViewById(R.id.featured_image);
-            product_name = itemView.findViewById(R.id.featured_p_name);
-            price = itemView.findViewById(R.id.featured_price);
+            productSubCategory = itemView.findViewById(R.id.featured_subCat_name);
+            this.onNoteListener = onNoteListener;
 
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onNoteListener.onNoteClick(getAdapterPosition());
+        }
+    }
+    public interface OnNoteListener {
+        void onNoteClick(int position);
     }
 }

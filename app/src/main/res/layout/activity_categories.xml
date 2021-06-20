@@ -11,111 +11,120 @@
     tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view_cat"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:id="@+id/nav_view_category"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu" />
-
+        app:menu="@menu/drawer_menu"
+        android:layout_gravity="start"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_cat"
+                android:id="@+id/toolbar_category"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
-                app:navigationIcon="@drawable/ic_menu"
-                app:title="Categories" />
+                app:navigationIcon="@drawable/ic_menu" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"
-                android:padding="8dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="4dp"
-                    android:layout_weight="1">
+                <TextView
+                    android:id="@+id/women_fashion_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/baloo"
+                    android:padding="10dp"
+                    android:text="Women's Fashion"
+                    android:textSize="15sp" />
 
-                    <RelativeLayout
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#32A3D3CF">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/featured_recycler_category"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="240dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="Women's Fashion"
-                            android:textSize="20sp"/>
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_weight="1">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="Men's Fashion"
-                            android:textSize="20sp"/>
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"
-                android:padding="8dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <TextView
+                    android:id="@+id/men_fashion_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/baloo"
+                    android:padding="10dp"
+                    android:text="Men's Fashion"
+                    android:textSize="15sp" />
 
-                    <RelativeLayout
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#32A3D3CF">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/featured_recycler2_category"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="240dp" />
 
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="Kid's Fashion"
-                            android:textSize="20sp"/>
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
+                </RelativeLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/kid_fashion_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/baloo"
+                    android:padding="10dp"
+                    android:text="Kid's Fashion"
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#32A3D3CF">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/featured_recycler3_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp" />
+
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
 
 

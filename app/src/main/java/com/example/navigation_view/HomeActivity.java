@@ -15,6 +15,12 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -27,7 +33,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView recyclerView;
     RecyclerView recyclerView2;
     RecyclerView recyclerView3;
-    RecyclerView.Adapter adapter;
+    HomePageAdapter adapter, adapter2, adapter3;
+
+    ArrayList<AddProductHelper> featuredLocations;
+    ArrayList<AddProductHelper> featuredLocations2;
+    ArrayList<AddProductHelper> featuredLocations3;
+
+    DatabaseReference databaseReference;
+    FirebaseAuth auth;
+
+    HomePageAdapter.OnNoteListenerHome onNoteListenerHome, onNoteListenerHome2, onNoteListenerHome3;
 
     String shopId;
 
@@ -44,15 +59,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         recyclerView2 = findViewById(R.id.featured_recycler2_home);
         recyclerView3 = findViewById(R.id.featured_recycler3_home);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Products");
+        auth = FirebaseAuth.getInstance();
+
         featuredRecycler();
         featuredRecycler2();
         featuredRecycler3();
 
         Bundle extra = getIntent().getExtras();
-        if(extra != null){
+        if (extra != null) {
             shopId = extra.getString("shopId");
         }
-        Log.i("shopId",shopId);
+        Log.i("shopId", shopId);
 
 
         setSupportActionBar(toolbar);
@@ -67,9 +85,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -77,14 +95,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_home:
                 break;
             case R.id.nav_categories:
-                startActivity(new Intent(getApplicationContext(), CategoriesActivity.class));
+                Intent intentCat = new Intent(HomeActivity.this, CategoriesActivity.class);
+                intentCat.putExtra("shopId", shopId);
+                startActivity(intentCat);
+                finish();
                 break;
             case R.id.nav_add_product:
-                startActivity(new Intent(getApplicationContext(), AddProductActivity.class));
+                Intent intentAdd = new Intent(HomeActivity.this, AddProductActivity.class);
+                intentAdd.putExtra("shopId", shopId);
+                startActivity(intentAdd);
+                finish();
+                break;
+            case R.id.nav_logout:
+                auth.signOut();
+                startActivity(new Intent(HomeActivity.this, LogInActivity.class));
+                finish();
+
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -92,56 +122,123 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void featuredRecycler3() {
-        recyclerView3.setHasFixedSize(true);
-        recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+    private void featuredRecycler() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        ArrayList<FeaturedHelperClass> featuredLocations = new ArrayList<>();
+        featuredLocations = new ArrayList<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    AddProductHelper helper = dataSnapshot.getValue(AddProductHelper.class);
+                    if (helper.getCategory().equals("Women's Fashion") && helper.shopId.equals(shopId)) {
+                        featuredLocations.add(helper);
+                    }
+                }
+                setOnClickListener();
+                adapter = new HomePageAdapter(featuredLocations, HomeActivity.this, onNoteListenerHome);
+                recyclerView.setAdapter(adapter);
+            }
 
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.bart,"Bart","100$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.homer,"Homer","200$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.dollar,"Dollar","300$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.red,"Red","400$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.meter_saw,"Meter Saw","500$"));
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        adapter = new FeaturedAdapter(featuredLocations);
-        recyclerView3.setAdapter(adapter);
+            }
+        });
+
     }
+
 
     private void featuredRecycler2() {
         recyclerView2.setHasFixedSize(true);
-        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        ArrayList<FeaturedHelperClass> featuredLocations = new ArrayList<>();
+        featuredLocations2 = new ArrayList<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    AddProductHelper helper = dataSnapshot.getValue(AddProductHelper.class);
+                    if (helper.getCategory().equals("Men's Fashion") && helper.shopId.equals(shopId)) {
+                        featuredLocations2.add(helper);
+                    }
+                }
+                setOnClickListener();
+                adapter2 = new HomePageAdapter(featuredLocations2, HomeActivity.this, onNoteListenerHome2);
+                recyclerView2.setAdapter(adapter2);
+            }
 
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.bart,"Bart","100$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.homer,"Homer","200$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.dollar,"Dollar","300$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.red,"Red","400$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.meter_saw,"Meter Saw","500$"));
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        adapter = new FeaturedAdapter(featuredLocations);
-        recyclerView2.setAdapter(adapter);
-    }
+            }
+        });
 
-    private void featuredRecycler() {
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-
-        ArrayList<FeaturedHelperClass> featuredLocations = new ArrayList<>();
-
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.bart,"Bart","100$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.homer,"Homer","200$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.dollar,"Dollar","300$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.red,"Red","400$"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.meter_saw,"Meter Saw","500$"));
-
-        adapter = new FeaturedAdapter(featuredLocations);
-        recyclerView.setAdapter(adapter);
 
     }
 
+    private void featuredRecycler3() {
+        recyclerView3.setHasFixedSize(true);
+        recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        featuredLocations3 = new ArrayList<>();
 
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    AddProductHelper helper = dataSnapshot.getValue(AddProductHelper.class);
+                    if (helper.getCategory().equals("Kid's Fashion") && helper.shopId.equals(shopId)) {
+                        featuredLocations3.add(helper);
+                    }
+                }
+                setOnClickListener();
+                adapter3 = new HomePageAdapter(featuredLocations3, HomeActivity.this, onNoteListenerHome3);
+                recyclerView3.setAdapter(adapter3);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void setOnClickListener() {
+        onNoteListenerHome = new HomePageAdapter.OnNoteListenerHome() {
+            @Override
+            public void onNoteClick(int position) {
+                Log.i("ProductID", featuredLocations.get(position).getProductId());
+                Intent intent = new Intent (HomeActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productId",featuredLocations.get(position).getProductId());
+                intent.putExtra("shopId",shopId);
+                startActivity(intent);
+            }
+        };
+
+        onNoteListenerHome2 = new HomePageAdapter.OnNoteListenerHome() {
+            @Override
+            public void onNoteClick(int position) {
+                Log.i("ProductID", featuredLocations2.get(position).getProductId());
+                Intent intent = new Intent (HomeActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productId",featuredLocations2.get(position).getProductId());
+                intent.putExtra("shopId",shopId);
+                startActivity(intent);
+            }
+        };
+
+        onNoteListenerHome3 = new HomePageAdapter.OnNoteListenerHome() {
+            @Override
+            public void onNoteClick(int position) {
+                Log.i("ProductID", featuredLocations3.get(position).getProductId());
+                Intent intent = new Intent (HomeActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productId",featuredLocations3.get(position).getProductId());
+                intent.putExtra("shopId",shopId);
+                startActivity(intent);
+            }
+        };
+    }
 
 }
 

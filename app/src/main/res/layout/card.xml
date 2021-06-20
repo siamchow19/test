@@ -16,29 +16,21 @@
         <ImageView
             android:id="@+id/featured_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="0dp"
+            android:layout_weight="5"
             android:src="@drawable/bart"
             android:scaleType="fitCenter"/>
 
         <TextView
-            android:id="@+id/featured_p_name"
+            android:id="@+id/featured_subCat_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:fontFamily="@font/alegreya_sans_bold"
-            android:text="Product Name"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"/>
-
-        <TextView
-            android:id="@+id/featured_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/alegreya_sans_bold"
-            android:text="Price: 100(BDT)"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"/>
-
-
+            android:text="Sub Category"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"/>
 
 
     </LinearLayout>
